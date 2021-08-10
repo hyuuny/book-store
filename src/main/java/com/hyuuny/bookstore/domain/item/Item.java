@@ -1,6 +1,7 @@
 package com.hyuuny.bookstore.domain.item;
 
 import com.hyuuny.bookstore.domain.Category;
+import com.hyuuny.bookstore.exception.NotEnoughStockException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -32,5 +33,17 @@ abstract public class Item {
 
   @ManyToMany(mappedBy = "items")
   private List<Category> categories = new ArrayList<>();
+
+  public void addStock(int quantity) {
+    this.stockQuantity += quantity;
+  }
+
+  public void removeStock(int quantity) {
+    int resultStock = this.stockQuantity -= quantity;
+    if (resultStock < 0) {
+      throw new NotEnoughStockException("need more stock");
+    }
+    this.stockQuantity = resultStock;
+  }
 
 }
