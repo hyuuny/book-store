@@ -3,6 +3,7 @@ package com.hyuuny.bookstore.domain;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.LAZY;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class Order {
   @JoinColumn(name = "member_id")
   private Member member;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "order", cascade = ALL)
   private List<OrderItem> orderItems = new ArrayList<>();
 
